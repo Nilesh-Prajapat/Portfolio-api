@@ -30,7 +30,7 @@ export default async (req, res) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "portfolio.nilesh@resend.dev", // Replace with your verified Resend email
+          from: "$email", // Replace with your verified Resend email
           to: ["work.nilesh.pr@gmail.com"], // Replace with your email
           subject: "New Contact Form Submission",
           html: `
