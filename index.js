@@ -66,9 +66,14 @@ export default async (req, res) => {
         return res.status(response.status).json({ error: 'Error fetching image' });
       }
 
+      const contentType = response.headers.get('Content-Type');
       const imageBuffer = await response.buffer();  // Get the image as a buffer
-      res.setHeader('Content-Type', response.headers.get('Content-Type'));
-      res.send(imageBuffer);  // Send the image buffer as the response
+
+      // Set the appropriate content type based on the fetched image
+      res.setHeader('Content-Type', contentType);
+      
+      // Send the image buffer as the response
+      res.send(imageBuffer);
 
     } catch (error) {
       console.error('Error fetching image:', error);
