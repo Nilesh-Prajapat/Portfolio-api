@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 export default async (req, res) => {
   // CORS headers to allow specific origin and methods
-  const FRONTEND_URL = process.env.FRONTEND_URL || '*'; // Frontend URL from .env file
+  const FRONTEND_URL = process.env.FRONTEND_URL; // Frontend URL from .env file
 
   res.setHeader('Access-Control-Allow-Origin', FRONTEND_URL); 
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
