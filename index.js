@@ -52,34 +52,35 @@ export default async (req, res) => {
   }
 
   // Handle GET request for fetching images
-  else if (req.method === 'GET' && req.query.imageUrl) {
-    const { imageUrl } = req.query;
+// Handle GET request for fetching images
+else if (req.method === 'GET' && req.query.imageUrl) {
+  const { imageUrl } = req.query;
 
-    if (!imageUrl) {
-      return res.status(400).json({ error: "Image URL is required" });
-    }
-
-    try {
-      const response = await fetch(imageUrl);
-
-      if (!response.ok) {
-        return res.status(response.status).json({ error: 'Error fetching image' });
-      }
-
-      const contentType = response.headers.get('Content-Type');
-      const imageBuffer = await response.buffer();  // Get the image as a buffer
-
-      // Set the appropriate content type based on the fetched image
-      res.setHeader('Content-Type', contentType);
-      
-      // Send the image buffer as the response
-      res.send(imageBuffer);
-
-    } catch (error) {
-      console.error('Error fetching image:', error);
-      res.status(500).json({ error: "Internal Server Error", details: error.message });
-    }
-  } else {
-    res.status(405).json({ error: "Method Not Allowed" });
+  if (!imageUrl) {
+    return res.status(400).json({ error: "Image URL is required" });
   }
+
+  try {
+    const response = await fetch(imageUrl);
+
+    if (!response.ok) {
+      return res.status(response.status).json({ error: 'Error fetching image' });
+    }
+
+    const contentType = response.headers.get('Content-Type');
+    
+    // Set the appropriate content type based on the fetched image
+    res.setHeader('Content-Type', contentType);
+
+    // Stream the image directly to the client
+    response.body.pipe(res);  // Pipe the response body (image stream) to the client
+
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
+  }
+} else {
+  res.status(405).json({ error: "Method Not Allowed" });
+}
+
 };
