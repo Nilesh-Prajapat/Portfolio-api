@@ -3,7 +3,9 @@ require("dotenv").config();
 
 module.exports = async (req, res) => {
   // CORS headers to allow specific origin and methods
-  res.setHeader('Access-Control-Allow-Origin', 'https://itsnilesh.vercel.app'); // Your frontend URL
+  const FRONTEND_URL = process.env.FRONTEND_URL || 'https://itsnilesh.vercel.app'; // You can set this in your Vercel environment variables
+
+  res.setHeader('Access-Control-Allow-Origin', FRONTEND_URL); // Set your frontend origin here
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
