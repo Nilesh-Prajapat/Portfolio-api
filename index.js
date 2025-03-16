@@ -1,9 +1,9 @@
-const fetch = require("node-fetch");
-require("dotenv").config();
+import fetch from 'node-fetch';
+import 'dotenv/config';
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   // CORS headers to allow specific origin and methods
-  const FRONTEND_URL ='https://itsnilesh.vercel.app'; // You can set this in your Vercel environment variables
+  const FRONTEND_URL = 'https://itsnilesh.vercel.app'; // You can set this in your Vercel environment variables
 
   res.setHeader('Access-Control-Allow-Origin', "*"); // Set your frontend origin here
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
