@@ -6,8 +6,15 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS configuration with specific origin and allowed methods/headers
+const corsOptions = {
+  origin: 'https://itsnilesh.vercel.app', // Allow only this origin
+  methods: ['GET', 'POST', 'OPTIONS'], // Allow specific methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions)); // Apply CORS with the specific options
 
 // Email Sending API
 app.post("/api/send_email", async (req, res) => {
