@@ -3,9 +3,9 @@ import 'dotenv/config';
 
 export default async (req, res) => {
   // CORS headers to allow specific origin and methods
-  const FRONTEND_URL = 'https://itsnilesh.vercel.app'; // You can set this in your Vercel environment variables
+  const FRONTEND_URL = process.env.FRONTEND_URL; // Set your frontend URL in the .env file
 
-  res.setHeader('Access-Control-Allow-Origin', "*"); // Set your frontend origin here
+  res.setHeader('Access-Control-Allow-Origin', FRONTEND_URL); // Set your frontend origin here
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
@@ -42,9 +42,15 @@ export default async (req, res) => {
         }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        return res.status(response.status).json({ error: errorData.error || 'Unknown error' });
+      }
+
       const data = await response.json();
-      res.status(response.status).json(data);
+      res.status(200).json(data);
     } catch (error) {
+      console.error('Error during email sending:', error);
       res.status(500).json({ error: "Internal Server Error", details: error.message });
     }
   } else {
