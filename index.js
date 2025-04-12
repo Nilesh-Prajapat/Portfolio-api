@@ -27,7 +27,7 @@ export default async (req, res) => {
         },
         body: JSON.stringify({
           from: "portfolio.nilesh@resend.dev", // Replace with your verified Resend email
-          to: ["dev.portfolio.nilesh@gmail.com"], // Replace with your email
+          to: ["dev.portfolio.nilesh+portfolio@gmail.com"], // Replace with your email
           subject: "New Contact Form Submission",
           html: `
             <h2>Contact Form Submission</h2>
